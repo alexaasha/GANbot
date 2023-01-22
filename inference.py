@@ -9,7 +9,7 @@ from basicsr.utils import imwrite
 from gfpgan import GFPGANer
 
 
-def main():
+def main(input_image_name, ):
     """Inference demo for GFPGAN (for users).
     """
     parser = argparse.ArgumentParser()
@@ -17,12 +17,10 @@ def main():
         '-i',
         '--input',
         type=str,
-        default='inputs/whole_imgs',
-        help='Input image or folder. Default: inputs/whole_imgs')
-    parser.add_argument('-o', '--output', type=str, default='results', help='Output folder. Default: results')
-    # we use version to select models, which is more user-friendly
-    parser.add_argument(
-        '-v', '--version', type=str, default='1.3', help='GFPGAN model version. Option: 1 | 1.2 | 1.3. Default: 1.3')
+        default=f"inputs/{input_image_name}",
+        help='Input image or folder. Default: inputs')
+    parser.add_argument('-o', '--output', type=str, default=f'results/{input_image_name}',
+                        help='Output folder. Default: results')
     parser.add_argument(
         '-s', '--upscale', type=int, default=2, help='The final upsampling scale of the image. Default: 2')
 
