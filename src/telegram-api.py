@@ -28,19 +28,18 @@ async def get_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_document(chat_id=update.effective_chat.id, document=output_name)
 
 
-if __name__ == '__main__':
-    with open('token.json', 'r') as f:
-        creds = json.load(f)
+with open('../token.json', 'r') as f:
+    creds = json.load(f)
 
-    application = ApplicationBuilder().token(creds["token"]).build()
+application = ApplicationBuilder().token(creds["token"]).build()
 
-    start_handler = CommandHandler('start', start)
-    application.add_handler(start_handler)
+start_handler = CommandHandler('start', start)
+application.add_handler(start_handler)
 
-    photo_handler = MessageHandler(filters.PHOTO, get_photo)
-    application.add_handler(photo_handler)
+photo_handler = MessageHandler(filters.PHOTO, get_photo)
+application.add_handler(photo_handler)
 
-    unknown_handler = MessageHandler(filters.COMMAND, unknown)
-    application.add_handler(unknown_handler)
+unknown_handler = MessageHandler(filters.COMMAND, unknown)
+application.add_handler(unknown_handler)
 
-    application.run_polling()
+application.run_polling()
