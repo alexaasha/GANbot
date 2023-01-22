@@ -20,10 +20,11 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def get_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     new_file = await context.bot.get_file(update.message.photo[-1].file_id)
-    input_name = f"inputs/{abs(hash(update.message.photo[-1].file_id[:10]))}.jpeg"
+    image_hash = abs(hash(update.message.photo[-1].file_id[:10]))
+    input_name = f"inputs/{image_hash}.jpeg"
     await new_file.download_to_drive(custom_path=input_name)
     main(input_name)
-    output_name = f"results/restored_imgs/{abs(hash(update.message.photo[-1].file_id[:10]))}.jpeg"
+    output_name = f"results/restored_imgs/{image_hash}.jpeg"
     await context.bot.send_document(chat_id=update.effective_chat.id, document=output_name)
 
 
