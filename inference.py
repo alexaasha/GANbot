@@ -1,7 +1,6 @@
 import argparse
 import cv2
 import glob
-import numpy as np
 import os
 import torch
 from basicsr.utils import imwrite
@@ -9,7 +8,7 @@ from basicsr.utils import imwrite
 from gfpgan import GFPGANer
 
 
-def main(input_image_name, ):
+def main(input_image_name=""):
     """Inference demo for GFPGAN (for users).
     """
     parser = argparse.ArgumentParser()
@@ -100,30 +99,13 @@ def main(input_image_name, ):
         input_img = cv2.imread(img_path, cv2.IMREAD_COLOR)
 
         # restore faces and background if necessary
-        cropped_faces, restored_faces, restored_img = restorer.enhance(
+        _, _, restored_img = restorer.enhance(
             input_img,
             has_aligned=args.aligned,
             only_center_face=args.only_center_face,
             paste_back=True,
             weight=args.weight)
 
-        # save faces
-        for idx, (cropped_face, restored_face) in enumerate(zip(cropped_faces, restored_faces)):
-            # save cropped face
-            save_crop_path = os.path.join(args.output, 'cropped_faces', f'{basename}_{idx:02d}.png')
-            imwrite(cropped_face, save_crop_path)
-            # save restored face
-            if args.suffix is not None:
-                save_face_name = f'{basename}_{idx:02d}_{args.suffix}.png'
-            else:
-                save_face_name = f'{basename}_{idx:02d}.png'
-            save_restore_path = os.path.join(args.output, 'restored_faces', save_face_name)
-            imwrite(restored_face, save_restore_path)
-            # save comparison image
-            cmp_img = np.concatenate((cropped_face, restored_face), axis=1)
-            imwrite(cmp_img, os.path.join(args.output, 'cmp', f'{basename}_{idx:02d}.png'))
-
-        # save restored img
         if restored_img is not None:
             if args.ext == 'auto':
                 extension = ext[1:]
