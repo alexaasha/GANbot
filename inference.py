@@ -18,8 +18,7 @@ def main(input_image_name=""):
         type=str,
         default=f"inputs/{input_image_name}",
         help='Input image or folder. Default: inputs')
-    parser.add_argument('-o', '--output', type=str, default=f'results/{input_image_name}',
-                        help='Output folder. Default: results')
+    parser.add_argument('-o', '--output', type=str, default=f'results', help='Output folder. Default: results')
     parser.add_argument(
         '-s', '--upscale', type=int, default=2, help='The final upsampling scale of the image. Default: 2')
 
