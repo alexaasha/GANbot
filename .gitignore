@@ -1,0 +1,7 @@
+/.idea/
+/results/
+/inputs/
+/gfpgan/weights/parsing_parsenet.pth
+/gfpgan/weights/GFPGANv1.4.pth
+/gfpgan/weights/detection_Resnet50_Final.pth
+/token.json
