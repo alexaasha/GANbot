@@ -28,7 +28,7 @@ async def get_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_document(chat_id=update.effective_chat.id, document=output_name)
 
 
-with open('../token.json', 'r') as f:
+with open('token.json', 'r') as f:
     creds = json.load(f)
 
 application = ApplicationBuilder().token(creds["token"]).build()
