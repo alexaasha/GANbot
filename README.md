@@ -7,4 +7,5 @@ improve quality of photos with faces via GAN.
 
 Below you see a brief example of a dialog. To upload your photo
 simply attach it to a bot via button with a paper clip.
+
 ![example of dialog](readme_images/dialog.jpeg)
