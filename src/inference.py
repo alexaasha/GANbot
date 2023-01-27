@@ -60,7 +60,7 @@ def main(input_image_name=""):
             bg_upsampler = None
         else:
             from basicsr.archs.rrdbnet_arch import RRDBNet
-            from realesrgan import RealESRGANer
+            from src.realesrgan import RealESRGANer
             model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2)
             bg_upsampler = RealESRGANer(
                 scale=2,
@@ -76,11 +76,7 @@ def main(input_image_name=""):
     arch = 'clean'
     model_name = 'GFPGANv1.4'
     channel_multiplier = 2
-
-    # determine model paths
-    model_path = os.path.join('experiments/pretrained_models', model_name + '.pth')
-    if not os.path.isfile(model_path):
-        model_path = os.path.join('gfpgan/weights', model_name + '.pth')
+    model_path = os.path.join('src/gfpgan/weights', model_name + '.pth')
 
     restorer = GFPGANer(
         model_path=model_path,
