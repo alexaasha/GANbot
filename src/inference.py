@@ -30,8 +30,6 @@ def main(input_image_name=""):
         default=400,
         help='Tile size for background sampler, 0 for no tile during testing. Default: 400')
     parser.add_argument('--suffix', type=str, default=None, help='Suffix of the restored faces')
-    parser.add_argument('--only_center_face', action='store_true', help='Only restore the center face')
-    parser.add_argument('--aligned', action='store_true', help='Input are aligned faces')
     parser.add_argument(
         '--ext',
         type=str,
@@ -58,18 +56,6 @@ def main(input_image_name=""):
             warnings.warn('The unoptimized RealESRGAN is slow on CPU. We do not use it. '
                           'If you really want to use it, please modify the corresponding codes.')
             bg_upsampler = None
-        else:
-            from basicsr.archs.rrdbnet_arch import RRDBNet
-            from src.realesrgan import RealESRGANer
-            model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2)
-            bg_upsampler = RealESRGANer(
-                scale=2,
-                model_path='https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth',
-                model=model,
-                tile=args.bg_tile,
-                tile_pad=10,
-                pre_pad=0,
-                half=True)  # need to set False in CPU mode
     else:
         bg_upsampler = None
 
@@ -96,8 +82,8 @@ def main(input_image_name=""):
         # restore faces and background if necessary
         _, _, restored_img = restorer.enhance(
             input_img,
-            has_aligned=args.aligned,
-            only_center_face=args.only_center_face,
+            has_aligned=False,
+            only_center_face=False,
             paste_back=True,
             weight=args.weight)
 
